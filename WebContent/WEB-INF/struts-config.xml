@@ -5,29 +5,22 @@
 <struts-config>
 
 	<form-beans>
-		<!-- sample form bean descriptor for an ActionForm <form-bean name="inputForm" 
-			type="app.InputForm"/> end sample -->
-
-		<!-- sample form bean descriptor for a DynaActionForm <form-bean name="logonForm" 
-			type="org.apache.struts.action.DynaActionForm"> <form-property name="username" 
-			type="java.lang.String"/> <form-property name="password" type="java.lang.String"/> 
-			</form-bean> end sample -->
+		<form-bean  name="taf" type="com.encore.s0724.forms.TestActionForm"/>
+		<form-bean  name="laf" type="com.encore.s0724.forms.LoginActionForm"/>
+		<form-bean  name="caf" type="com.encore.s0724.forms.CalcActionForm"/>
 	</form-beans>
 
 	<global-exceptions>
-		<!-- sample exception handler <exception key="expired.password" type="app.ExpiredPasswordException" 
-			path="/changePassword.jsp"/> end sample -->
 	</global-exceptions>
 
 
 	<!-- =========================================== Global Forward Definitions -->
 
 	<global-forwards>
-		<!-- Default forward to "Welcome" action -->
-		<!-- Demonstrates using index.jsp to forward -->
 		<forward name="welcome" path="/Welcome.do" />
+		<!-- 자주이용하는 페이지 등록 -->
+		<forward name="loginForm" path="/0724/loginForm.do" redirect="true"></forward>
 	</global-forwards>
-
 
 	<!-- =========================================== Action Mapping Definitions -->
 
@@ -44,32 +37,60 @@
 			<forward name="success" path="/0723/loginSuccess.jsp"/>
 			<forward name="fail" path="/0723/loginFail.jsp"/>
 		</action>
+		
+		<!-- 올바르지 않은 것을 type을 적게 되면  forward로 이동
+		<action path="/test" 
+				forward="/0724/test.jsp" 
+				type="com.encore.s0724.actions.TestAction"> 
+			<forward name="siri" path="/0724/test.jsp" > </forward>
+		</action>
+		-->
+		
+		<!-- ActionForm을 거친 Action실행 후 JSP페이지 보이기 -->
+		<!-- input: 액션포믈래스 안에서 적절치 않은 데이터를 발견시 이동할 경로 (폼을담고있는 JSP 페이지) -->
+		<action path="/test" 
+				type="com.encore.s0724.actions.TestAction"
+				name="taf"
+				scope="request"
+				validate="true"
+				input="/hello.jsp"
+				>
+			<forward name="siri" path="/0724/test.jsp" ></forward>
+		</action>
+		
+		<!-- 0724날짜 정의된 Action, ActionForm정의 -->
+		<action path="/0724/loginForm"
+				forward="/0724/loginForm2.jsp">
+		</action>
+		
+		<action path="/0724/login"
+				name="laf"
+				scope="request"
+				validate="true"
+				input="/0724/loginForm2.jsp"
+				type="com.encore.s0724.actions.LoginAction">
+			<forward name="loginForm" path="/0724/loginForm.do" redirect="true"></forward>
+		</action>
+		
+		<action path="/0724/logout"
+				type="com.encore.s0724.actions.LogoutAction"/>
+		
+		<action path="/0724/calcForm"
+				forward="/0724/calc.jsp">
+		</action>
+		<action path="/0724/calc"
+				name="caf"
+				scope="request"
+				validate="true"
+				input="/0724/calc.jsp"
+				type="com.encore.s0724.actions.CalcAction">
+			<forward name="calcForm" path="/0724/calcForm.do" redirect="true"></forward>
+		</action>
 	</action-mappings>
 
-	<message-resources parameter="MessageResources" />
+	<message-resources parameter="resources.application"/>
 
 	<!-- ======================================================= Tiles plugin -->
-	<!-- This plugin initialize Tiles definition factory. This later can takes 
-		some parameters explained here after. The plugin first read parameters from 
-		web.xml, thenoverload them with parameters defined here. All parameters are 
-		optional. The plugin should be declared in each struts-config file. - definitions-config: 
-		(optional) Specify configuration file names. There can be several comma separated 
-		file names (default: ?? ) - moduleAware: (optional - struts1.1) Specify if 
-		the Tiles definition factory is module aware. If true (default), there will 
-		be one factory for each Struts module. If false, there will be one common 
-		factory for all module. In this later case, it is still needed to declare 
-		one plugin per module. The factory will be initialized with parameters found 
-		in the first initialized plugin (generally the one associated with the default 
-		module). true : One factory per module. (default) false : one single shared 
-		factory for all modules - definitions-parser-validate: (optional) Specify 
-		if xml parser should validate the Tiles configuration file. true : validate. 
-		DTD should be specified in file header (default) false : no validation Paths 
-		found in Tiles definitions are relative to the main context. To use this 
-		plugin, download and add the Tiles jar to your WEB-INF/lib directory then 
-		uncomment the plugin definition below. <plug-in className="org.apache.struts.tiles.TilesPlugin" 
-		> <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" 
-		/> <set-property property="moduleAware" value="true" /> </plug-in> -->
-
 
 	<!-- =================================================== Validator plugin -->
 
