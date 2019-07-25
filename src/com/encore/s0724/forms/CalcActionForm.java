@@ -43,7 +43,8 @@ public class CalcActionForm extends ActionForm {
 
 		System.out.println("validate() 호출!");
 		ActionErrors err = new ActionErrors(); // 에러(빈)바구니 생성
-		if (su1 != null) {
+//		if (su1 != null) {
+		if (request.getMethod().equals("POST")) {
 			if (su1.equals("") || su2.equals("")) {
 				err.add("siri", new ActionMessage("공백안되요. 데이터를 입력하세요", false));
 				System.out.println("공백안되요.");
@@ -53,7 +54,7 @@ public class CalcActionForm extends ActionForm {
 			} else if ("/".equals(oper) && "0".equals(su2)) {
 				err.add("siri", new ActionMessage("0으로 나눌수 없어요!", false));
 			}
-		}else {
+		}else { // 메소드가 get요청일때
 			err.add("siri", new ActionMessage("잘못된 접근입니다.", false));
 		}
 		return err;

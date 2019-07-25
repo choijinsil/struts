@@ -1,4 +1,4 @@
-package com.encore.s0724.actions;
+package guest.actions;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,22 +8,18 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.encore.s0724.forms.TestActionForm;
+import guest.dao.GuestDAO;
 
-public class TestAction extends Action{
+public class GuestUpdateFormAction extends Action {
+	// 수정폼 요청
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		System.out.println("execute()");
-		
-		TestActionForm taf= (TestActionForm) form;
-		
-		String name=  taf.getUsername();
-		String age= taf.getUserage();
-		
-		System.out.println("이름>>"+name+", 나이>>"+age);
-		return mapping.findForward("siri");
+
+		GuestDAO dao = new GuestDAO();
+		request.setAttribute("vo", dao.selectById(Integer.parseInt(request.getParameter("no"))));
+
+		return mapping.findForward("edit");
 	}
 }

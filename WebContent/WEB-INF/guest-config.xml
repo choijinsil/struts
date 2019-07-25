@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<!-- guest-config.xml -->          
+<struts-config>
+  <action-mappings>
+     <!-- <action path="/guest/form"
+             forward="/guest/inputForm.jsp"></action> -->
+             
+     <action path="/guest/form"
+             type="guest.actions.GuestAction">
+        <forward name="form" path="/guest/inputForm.jsp"/>        
+        <forward name="list" path="/guest/list.do" redirect="true"/>        
+     </action>
+             
+     <action path="/guest/list"
+             type="guest.actions.GuestListAction">
+        <forward name="list" path="/guest/list.jsp"></forward>        
+     </action>
+             
+     <action path="/guest/edit"
+             type="guest.actions.GuestUpdateFormAction">
+        <forward name="edit" path="/guest/editForm.jsp"/>        
+     </action>
+     
+     <action path="/guest/update"
+             type="guest.actions.GuestUpdateAction">
+        <forward name="list" path="/guest/list.do" redirect="true"/>     
+     </action>
+            
+     <action path="/guest/delete"
+             type="guest.actions.GuestDeleteAction">
+        <forward name="list" path="/guest/list.do" redirect="true"/>     
+     </action>       
+
+     <!-- 비밀번호 확인창  -->
+     <action path="/guest/passForm"
+             forward="/guest/pass_check2.jsp"/>
+            
+     <action path="/guest/passCheck"
+             type="guest.actions.GuestPassCheckAction">
+        <forward name="passForm" path="/guest/pass_check2.jsp"/>     
+     </action>
+             
+  </action-mappings>
+</struts-config>
+
+
+

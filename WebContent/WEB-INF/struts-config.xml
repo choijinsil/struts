@@ -8,6 +8,7 @@
 		<form-bean  name="taf" type="com.encore.s0724.forms.TestActionForm"/>
 		<form-bean  name="laf" type="com.encore.s0724.forms.LoginActionForm"/>
 		<form-bean  name="caf" type="com.encore.s0724.forms.CalcActionForm"/>
+
 	</form-beans>
 
 	<global-exceptions>
@@ -46,14 +47,17 @@
 		</action>
 		-->
 		
+		
+		<action path="/testForm" forward="/0725/form.jsp"></action>
 		<!-- ActionForm을 거친 Action실행 후 JSP페이지 보이기 -->
 		<!-- input: 액션포믈래스 안에서 적절치 않은 데이터를 발견시 이동할 경로 (폼을담고있는 JSP 페이지) -->
 		<action path="/test" 
-				type="com.encore.s0724.actions.TestAction"
+				
 				name="taf"
 				scope="request"
-				validate="true"
+				validate="true" 
 				input="/hello.jsp"
+				 type="com.encore.s0724.actions.TestAction"
 				>
 			<forward name="siri" path="/0724/test.jsp" ></forward>
 		</action>
@@ -86,14 +90,46 @@
 				type="com.encore.s0724.actions.CalcAction">
 			<forward name="calcForm" path="/0724/calcForm.do" redirect="true"></forward>
 		</action>
+		
+		
+		<!-- <action path="/guest/list"
+				type="guest.actions.GuestListAction">
+			<forward name="listForm" path="/guest/list.jsp"></forward>
+		</action>
+		
+		<action path="/guest/inputForm"
+				forward="/guest/inputForm.jsp">
+		</action>
+		<action path="/guest/input"
+				type="guest.actions.GuestAction">
+			<forward name="list" path="/guest/list.do" redirect="true" ></forward>
+		</action>
+		
+		<action path="/guest/update"
+				type="guest.actions.GuestUpdateAction">
+			<forward name="list" path="/guest/list.do" redirect="true" ></forward>
+		</action> -->
+		
+		<!-- 타일즈 레이아웃 화면 등록 -->
+		<action path="/tiles/main" forward=".main"/>
+		<action path="/tiles/menu1" forward=".menu1"/>
+		<action path="/tiles/menu2" forward=".menu2"/>
 	</action-mappings>
+	
+	<controller processorClass="com.encore.control.MyRequestProcessor"/>
 
 	<message-resources parameter="resources.application"/>
 
 	<!-- ======================================================= Tiles plugin -->
 
 	<!-- =================================================== Validator plugin -->
-
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/config/tiles-defs.xml"/>
+		<set-property property="definitions-debug" value="2"/>
+		<set-property property="definitions-parser-details" value="2"/>
+		<set-property property="definitions-parser-validate" value="true"/>
+	</plug-in>
+	
 	<plug-in
 		className="org.apache.struts.validator.ValidatorPlugIn">
 		<set-property property="pathnames"
