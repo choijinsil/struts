@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>뉴스정보</title>
+	<script type="text/javascript" src="/struts/js/ajax.js"></script>
+	<script type="text/javascript">
+	//ajax요청
+	function loadNews(){// 요청
+		//세번째 인자값에 메소드()를 적으면 안된다. 무조건 메소드 명만 왜? 메소드가 들어가면 그것만 우선실행되니까 null이 나온다.
+		sendRequest('news.jsp', null, loadedNews);
+		
+	}
+	
+	function loadedNews(){
+		if(xhr.readyState==4){
+			if(xhr.status==200){
+				//응답데이터 얻기 xhr.response
+				// responseXML --> Document
+				document.getElementById('d1').innerHTML=xhr.responseText;
+			}else{}
+		}
+	}
+	
+	window.onload=function(){
+		loadNews();
+	}
+	</script>
+</head>
+<body>
+	<h3>최신뉴스</h3>
+	<hr/>
+	<div id="d1"></div>
+</body>
+</html>

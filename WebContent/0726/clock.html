@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>시간출력</title>
+<script type="text/javascript">
+
+	function printTime(){
+		var clock = document.getElementById('clock');
+		var now = new Date();
+		clock.innerHTML = //id가 “clock”인 span태그에 현재 시간을 HTML코드로 입력
+		now.getFullYear() + '년' +
+		(now.getMonth()+1) +'월' +
+		now.getDate() +'일'+
+		now.getHours() +'시' +
+		now.getMinutes() +'분' +
+		now.getSeconds() +'초';
+		setTimeout('printTime()', 1000);//1초단위로 재귀호출
+	}
+	
+	window.onload= function(){
+		printTime();
+	}
+</script>
+</head>
+<body>
+	현재시간은 <p id="clock"> 입니다.
+</body>
+</html>

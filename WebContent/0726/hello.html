@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>안녕하세요</title>
+<script type="text/javascript" >
+	
+	function manipulationDoc1(){
+		var name=document.frm.username.value;
+		document.getElementById("d1").innerHTML=name;
+	}
+	
+	function manipulationDoc2(){
+		document.getElementById("d2").innerHTML="안녕 난 둘째야!"
+	}
+	
+	function manipulationDoc3(){
+		var name=document.frm.username.value;
+		console.log('폼 name>>>'+ name)
+		
+		document.getElementById("d3").innerHTML=name;
+		
+		// 문서조작에 필요한 데이터가 외부에 있다.
+		xhr=new XMLHttpRequest();
+		//fromServer는 콜백함수 - 이벤트 발생시 실행하는 함수
+		
+		xhr.onreadystatechange=fromServer;
+		
+		// encodeURLComponent("홍길동") <--UTF-8설정 ,get방식 한글이 깨질때
+		// 한글데이터를(서버JSP에게) get방식으로 전달하는 경우 한글깨짐 발생
+		
+		// 데이터를 출력하는 URL을 요청
+		// xhr.open(HTTP요청방식, 요청 URL)
+		//xhr.open('GET','hello.jsp?a=10&name=siri' );
+		xhr.open('POST','hello.jsp');
+		
+		//URL요청시 전달할 데이터가 text임을 정의! send되는 데이터가 있을 경우 사용한다.
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.send('uname='+name); //Post에 전달될 파라미터
+	}
+	
+	function fromServer(){ // 응답데이터 얻어오기
+		if(xhr.readyState==4){
+			//alert('fromserver()');
+			var msg = xhr.responseText;
+			document.getElementById("d3").innerHTML=msg;
+			alert(msg);
+		}
+	}
+</script>
+</head>
+<!-- hello.html(확장자html은 요청페이지) -->
+<body>
+  <h3>Ajax테스트</h3>
+  <hr>
+  <form name="frm" >
+     <input type="text" name="username">
+  </form>
+  <br>
+  <input type="button" value="문서조작요청1" onclick="manipulationDoc1()">
+  <input type="button" value="문서조작요청2" onclick="manipulationDoc2()">
+  <input type="button" value="문서조작요청3" onclick="manipulationDoc3()">
+  <div id="d1"></div>
+  <div id="d2"></div>
+  <div id="d3"></div>
+  
+</body>
+</html>
+

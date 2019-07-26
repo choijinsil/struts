@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>뉴스정보</title>
+	<script type="text/javascript" src="/struts/js/ajax.js"></script>
+	<script type="text/javascript">
+		function loadNews(){
+			sendRequest('news.jsp',null,loadedNews);
+		}
+		
+		function loadedNews(){
+			if(xhr.readyState==4&&xhr.status==200){
+				document.getElementById('d1').innerHTML=xhr.responseText;
+			}
+		}
+		
+		window.onload=function(){
+			loadNews();
+		}
+	</script>
+</head>
+<body>
+	<h3>최신뉴스</h3>
+	<hr/>
+	<div id="d1"></div>
+</body>
+</html>

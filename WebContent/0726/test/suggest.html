@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/struts/js/ajax.js"></script>
+<script type="text/javascript">
+	var checkFirst=false;
+	var loopSendKeyword=false;
+	
+	function startSuggest(){ //키보드가 눌렷을때 최초 호출
+		 if(!checkFirst){
+			 setTimeout('sendKeyword()',500);//메소드를 0.5초마다 실행하겠다.
+			 loopSendKeyword=true;
+		 }
+		checkFirst=true;
+	}
+	
+	function sendkeyword(){
+		if(!loopSendKeyword){
+			return;
+		}
+		var keyword=document.searchForm.keyword.value;
+		
+		if(keyword!=''){
+			var params='keyword='+keyword;
+			sendRequest('suggest.jsp',params,displayResult,'POST');
+		}else{
+			hide('suggest');
+		}
+		setTimeout('sendKeyword()',500);
+	}
+	
+	function displayResult(){//콜백- 서버가전달한 데이터 얻기
+		if(xhr.readyState==4&&xhr.status==200){
+			var str=xhr.responseText;
+			var result=str.split('|');
+			var count= parseInt(result[0]);
+			
+			if(count>0){
+				var keywordList=result[1].split(',');
+				var htmlTxt='';
+				
+				for(var i=0; i<keywordList.length; i++){
+					 htmlTxt += "<a href=\"javascript:select('"+
+	    			 keywordList[i]+"')\">"+keywordList[i]+"</a><br>";
+				}
+				var suggestList=document.getElementById('suggestList');
+				suggestList.innerHTML=htmlTxt;
+				show('suggest');
+			}
+		}
+	}
+	
+	function select(selectedKeyword){
+		document.searchForm.keyword.value=selectedKeyword;
+		checkFirst=false;
+		loopSendKeyword=false;
+		hide('suggest');
+	}
+	
+	 function show(elementId){
+    	 var ele = document.getElementById(elementId);//ele: Element
+    	 if(ele)//id에 해당하는 엘리먼트가 존재한다면
+    	  ele.style.display='';
+     }
+     function hide(elementId){
+    	 var ele = document.getElementById(elementId);//ele: Element
+    	 if(ele)//id에 해당하는 엘리먼트가 존재한다면
+    	  ele.style.display='none';
+     }
+</script>
+</head>
+<body>
+ <form name="searchForm">
+     <font color="green">검색어</font> 
+     <input type="text" name="keyword" onkeydown="startSuggest()">
+     <button type="button">검색</button>
+     
+     <!-- 바깥div: 스타일 적용(보여라,숨겨라), 안div:제시어출력 -->
+     <div id="suggest" style="display:; position: absolute; left: 60px;">
+       <div id="suggestList"></div>
+     </div>
+  
+  </form>
+</body>
+</html>

@@ -83,7 +83,6 @@
            			<input type="button" value="삭제" onclick="passCheck('del')">
 				</td>
 			</tr>
-			
 		</table>
 	</form>
 
