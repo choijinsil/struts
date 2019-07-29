@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd" >
+<sqlMap namespace="emp">
+<typeAlias alias="empvo" type="com.encore.s0729.Emp" />
+	
+	
+	<!-- resultClass는 ibatis에서 new를 해주는 것이다. -->
+	<!-- resultClass에는 new 뒤에 생성하는 생성자로 써줘야 한다. -->
+	<select id="selectKeyword" resultClass="String" parameterClass="String">
+	 	select ename from emp where upper(ename) LIKE upper('%'||#ename#||'%')
+	</select>
+	
+	<select id="selectEmpInfo" resultClass="empvo" parameterClass="String">
+		select e.empno, e.ename, to_char(e.hiredate,'yyyy"년"mm"월"dd"일"') hiredate, d.dname
+		from emp e inner join dept d 
+		on e.deptno=d.deptno where ename=#ename#
+	</select>
+
+</sqlMap>

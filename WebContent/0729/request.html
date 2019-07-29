@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax요청 테스트(전체페이지)</title>
+
+	<script type="text/javascript" src="../js/ajax.js"></script>
+	<script type="text/javascript">
+	
+		function load1(){//페이지요청
+			//페이지 요청시 필요한 요소: URL요청, 파라미터 전달, 요청방식
+			sendRequest('response1.jsp', '', loaded1, 'GET')
+		}
+		
+		function loaded1(){//응답처리 콜백함수
+			//응답처리시 가장 중요한요소: 데이터 얻기
+			 if(xhr.readyState==4  && xhr.status==200){
+		        	var str = xhr.responseText; //str="Hello,Ajax~!!"
+		        	var arr = str.split(',');//arr=["Hello",  "Ajax~!!"]
+		        	
+		        	var html = '<ul>';
+		        	for(var i=0; i<arr.length; i++){
+		        	   html += '<li>'+arr[i]+'</li>'   	
+		        	}
+		        	html += '</ul>';
+		        	
+		        	//d1:Element ==> innerHTML속성사용가능!!
+		        	document.getElementById('d1').innerHTML = str;//서버가 전달한 데이터를 그대로 출력
+		        	
+		        	document.getElementById('d2').innerHTML=html
+		        }
+		}//loaded1
+		
+		function load2(){
+			var str=document.getElementById('name').value;
+			sendRequest('response2.jsp','username='+str, loaded2, 'POST');
+			
+		}
+		
+		function loaded2(){
+			 if(xhr.readyState==4  && xhr.status==200){
+				 var str=xhr.responseText;
+				 document.getElementById('d3').innerHTML=str;
+			 }
+		}
+		
+		function load3(){
+			var str=document.getElementById('name').value;
+			sendRequest('response3.jsp','username='+str, loaded3, 'POST');
+			
+		}
+		
+		function loaded3(){
+			 if(xhr.readyState==4 && xhr.status==200){
+				 var str=xhr.responseText;
+				 document.getElementById('d3').innerText=str;//태그도 그대로 텍스트로 호출
+				 //응답데이터의 MIME형식 중 text/html과 txt/plain은 결과의 차이가 없다.
+			 }
+		}
+		
+		function load4(){
+			sendRequest('response4.jsp',null,loaded4);
+		}
+		
+		function loaded4(){//응답처리(XML데이터 중'책제목' 데이터를 얻어서 특정영역에 번호순으로 출력)
+			 if(xhr.readyState==4  && xhr.status==200){
+				var doc= xhr.responseXML;
+				var root=doc.documentElement;//books리턴
+				console.log('root태그명: '+root.tagName);
+				var titleList=doc.getElementsByTagName('title');
+				//titleList의 자료형? NodeList(length속성, item)
+				
+				var html='<ol>';
+				for (var i = 0; i < titleList.length; i++) {
+					html+='<li>'+titleList.item(i).textContent+'</li>';//title의 자료형은ElementNode
+				}
+				html+='</ol>';
+				console.log('html>>'+html);
+				
+				document.getElementById('d3').innerHTML=html;
+						
+			 }
+			
+		}
+		
+		function load5(){//JSON데이터 요청
+			sendRequest('response5.jsp',null,loaded5);
+		}
+		
+		function loaded5(){//JSON데이터를 가공처리
+			//이름, 나이, 직업정보를 화면에 출력
+			if(xhr.readyState==4  && xhr.status==200){
+				var str = xhr.responseText;//str자료형: String ==>"{name:'나길동'}"
+				var siri = eval("("+str+")");
+				
+				//var siri=JSON.parse(str);
+				console.log(siri);
+				
+				for (var i = 0; i < siri.person.length; i++) {
+					
+				
+				 var htmlTxt = '<br>이름:'+ siri.person[i].name
+                 +'<br>나이:'+ siri.person[i].age
+                 +'<br>직업:'+ siri.person[i].job+'<hr color=red>';
+				 document.getElementById('d1').innerHTML += htmlTxt;
+				}
+	
+			}
+		}
+	</script>
+</head>
+<body>
+
+	<p>이름: <input type="text" name="uname" id="name"></p>
+	<button onclick="load1()">response1 요청</button>
+	<button onclick="load2()">response2 요청</button>
+	<button onclick="load3()">response3 요청(text, plain)</button>
+	<button onclick="load4()">response4 요청(xml)</button>
+	<button onclick="load5()">response5 요청(JSON)</button>
+	<h3>결과출력</h3>
+	<hr>
+	<div id="d1"></div><br/>
+	<hr>
+	<div id="d2"></div><br/>
+	<hr>
+	<div id="d3"></div><br/>
+</body>
+</html>
