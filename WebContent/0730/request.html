@@ -107,16 +107,106 @@
 	
 			}
 		}
+		
+		function load6(){
+			sendRequest('response6.jsp','',loaded6)
+		}
+		
+		function loaded6(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var books=eval(xhr.responseText);
+				console.log('책 갯수: '+books.length);
+				
+				var htmlTxt='<ol>';
+				for (var i = 0; i < books.length; i++) {
+					htmlTxt+='<li>'+books[i].title+'</li>'
+				}
+				htmlTxt+='</ol>';
+				document.getElementById('d1').innerHTML=htmlTxt;
+			}
+			
+		}
+		
+		var v1= eval("1000");
+		var v2= eval("({key:2000})");
+		var v3= eval("[3000,4000]");
+		
+		function load7(){
+			sendRequest('response7_1.jsp','',loded7)
+		}
+		
+		function loded7(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var ename=xhr.responseText;
+				
+				var htmlTxt='<ol>';
+				for (var i = 0; i < ename.length; i++) {
+					htmlTxt+=ename[i];
+				}
+				htmlTxt+='</ol>';
+				document.getElementById('d3').innerHTML=htmlTxt;
+			}
+		}
+		
+		function load7_2(){
+			sendRequest('response7_2.jsp','',loded7_2)
+		}
+		
+		function loded7_2(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var ename=eval(xhr.responseText);//배열어레이
+				
+				var htmlTxt='<ol>';
+				for (var i = 0; i < ename.length; i++) {
+					htmlTxt+=ename[i];
+				}
+				htmlTxt+='</ol>';
+				document.getElementById('d3').innerHTML=htmlTxt;
+			}
+		}
+		
+		function load7_3(){
+			sendRequest('response7_3.jsp','',loded7_3)
+		}
+		
+		function loded7_3(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var ename=xhr.responseText;
+				
+				document.getElementById('d3').innerHTML=ename;
+			}
+		}
+		
+		function load8(){
+			
+			var id= document.getElementById('deptno');
+				sendRequest('response8.do','deptno='+id.value, loaded8,'POST');
+				id.innerHTML='';
+		}
+		
+		function loaded8(){
+			if(xhr.readyState==4&&xhr.status==200){
+				var deptInfo=xhr.responseText;
+				document.getElementById('d3').innerHTML=deptInfo;
+			}
+		}
 	</script>
 </head>
 <body>
 
-	<p>이름: <input type="text" name="uname" id="name"></p>
-	<button onclick="load1()">response1 요청</button>
-	<button onclick="load2()">response2 요청</button>
-	<button onclick="load3()">response3 요청(text, plain)</button>
-	<button onclick="load4()">response4 요청(xml)</button>
-	<button onclick="load5()">response5 요청(JSON)</button>
+	<p>이름: <input type="text" name="uname" id="name"></p><br/>
+	<button onclick="load1()">response1 요청</button><br/>
+	<button onclick="load2()">response2 요청</button><br/>
+	<button onclick="load3()">response3 요청(text, plain)</button><br/>
+	<button onclick="load4()">response4 요청(xml)</button><br/>
+	<button onclick="load5()">response5 요청(JSON)</button><br/>
+	<button onclick="load6()">response6 요청(JSON)</button><br/>
+	<button onclick="load7()">response7 요청(전체사원명)</button><br/>
+	<button onclick="load7_2()">response7_2 요청(전체사원명)</button><br/>
+	<button onclick="load7_3()">response7_3 요청(전체사원명)</button><br/>
+	부서번호: <input type="text" id="deptno"><br/>
+	<button onclick="load8()">response8 요청</button><br/>
+	
 	<h3>결과출력</h3>
 	<hr>
 	<div id="d1"></div><br/>

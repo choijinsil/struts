@@ -22,8 +22,30 @@ public class EmpDAO {
 	}
 	
 	public Emp selectEmpInfo(String ename) throws SQLException {
-		
 		return (Emp) smc.queryForObject("emp.selectEmpInfo",ename);
+	}
+	
+	public List<String> selectNames() throws SQLException{
+		//조회된 행의 갯수
+		return smc.queryForList("emp.selectNames");
+	}
+	
+	public List<Emp> selectDeptInfo(int deptno) throws SQLException {
+		
+		return smc.queryForList("emp.selectDeptInfo",deptno);
+		//return null;
+	}
+	
+	public int selectMinDeptNo() throws SQLException {
+		return (int) smc.queryForObject("emp.selectMinDeptNo");//가장작은 부서번호 가져올것
+	}
+	
+	public boolean selectDeptNo(int deptno) throws SQLException {
+		int isDeptNo=(int) smc.queryForObject("emp.selectDeptNo",deptno);
+		if(isDeptNo==1) {
+			return true;
+		}
+		return false;
 	}
 
 }
