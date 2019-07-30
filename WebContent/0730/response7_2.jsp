@@ -7,14 +7,14 @@
 	EmpDAO dao= new EmpDAO();
 	List list=dao.selectNames();
 %>
-
-<h3>이 회사의 사원명</h3></br>
-사원명: 
 <%
 	out.println("[");
 	for(int i=0; i<list.size(); i++){	
 		
-		out.println("'"+list.get(i)+"'"+"<br/>");
+		out.println("'"+list.get(i)+"'");
+		if(i < list.size()-1){
+	         out.print(",");
+	      }
 	}
 	out.println("]");
 %>
