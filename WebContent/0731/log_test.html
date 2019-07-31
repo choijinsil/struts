@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그테스트</title>
+  <script type="text/javascript" src="/struts/js/log.js"></script>
+  <script type="text/javascript">
+    function loadList(){
+      log('테스트');
+    }
+    //window.onload = function(){실행할 자바스크립트 코드}
+    window.onload = function(){
+  //window==웹브라우저!!   window.onload ==> 웹브라우저에 현재HTML이 전부 출력되었을때
+    	loadList();
+    }
+  </script>
+</head>
+<body>
+  <div id="debugConsole" style="border: 1px solid green"></div>
+</body>
+</html>

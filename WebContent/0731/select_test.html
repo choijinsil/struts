@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>시구동</title>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript">
+
+	var selSido;
+	function load_sido() {
+		sendRequest('addr_result.jsp', '', loded_sido);
+	}
+	function loded_sido() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var txt = xhr.responseText;
+			var sido = document.getElementById('sido');
+			sido.innerHTML = txt;
+	
+		}
+	}
+	
+	function load_gugun(param) {//옵션<-- value 선택된값
+		selSido=param.value;
+		sendRequest('addr_result.jsp', 'param='+param.value+'&gu=gugun',loded_gugun);
+	}
+	function loded_gugun() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var txt = xhr.responseText;
+			var sido = document.getElementById('gugun');
+			sido.innerHTML = txt;
+	
+		}
+	}
+	
+	function load_dong(param) {
+		
+		sendRequest('addr_result.jsp', 'param='+selSido+'&gu='+param.value, loded_dong);
+	}
+	function loded_dong() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var txt = xhr.responseText;
+			var sido = document.getElementById('dong');
+			sido.innerHTML = txt;
+	
+		}
+	}
+	
+	window.onload = function() {
+		load_sido();
+	}
+	
+	/* function ck(ele) {
+		var sido = document.getElementById('sido');
+		if (sido == ele) {
+			var sido = document.getElementById('sido');
+			var selectsido = sido.options[sido.selectedIndex].text;
+			console.log(selectsido);
+			load(selectsido);
+			
+		} else if (gugun == ele) {
+			var sido = document.getElementById('gugun');
+			var selectgugun = gugun.options[gugun.selectedIndex].text;
+			load(selectgugun);
+			
+		} else if (dong == ele) {
+			var sido = document.getElementById('dong');
+			var selectdong = dong.options[dong.selectedIndex].text;
+			load(selectdong);
+			
+		}
+		
+	} */
+</script>
+</head>
+<body>
+	<select id="sido" onchange="load_gugun(this)"></select>
+	<select id="gugun" onchange="load_dong(this)"></select>
+	<select id="dong" ></select>
+</body>
+</html>

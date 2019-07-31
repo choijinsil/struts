@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd" >
+<sqlMap namespace="addr">
+
+	<select id="selectSi" resultClass="String">
+	 	select distinct(ds_sido) from ds_zip
+	</select>
+	
+	<select id="selectGu" resultClass="String" parameterClass="String">
+	 	select distinct(ds_gugun) from ds_zip where ds_sido=#ds_sido#
+	</select>
+	
+	<select id="selectDong" resultClass="String" parameterClass="java.util.Map">
+	 	select distinct(ds_dong) from ds_zip where ds_sido=#ds_sido# and ds_gugun=#ds_gugun#
+	</select>
+
+<!-- 	drop table ds_zip;
+CREATE TABLE ds_zip (
+
+  ds_id number(11) primary key,  1
+  ds_sido varchar2(6) NOT NULL, 서울
+  ds_gugun varchar2(30) NOT NULL, 강남구
+  ds_dong varchar2(75) NOT NULL 개포1동
+  
+); 
+insert into ds_zip values('1','서울','강남구','개포1동');
+-->
+
+</sqlMap>

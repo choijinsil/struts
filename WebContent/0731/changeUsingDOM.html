@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DOM을 사용한 변경(조작)</title>
+  <script type="text/javascript">
+     var cnt=0;
+     function appendItem(){
+    	cnt++; 
+    	 
+        var newDiv = document.createElement('div')//엘리먼트 생성 <div></div>	 
+        var htmlTxt="새로 추가된 아이템["+cnt+"]"+//HTML텍스트 생성
+                    ' <input type="button" value="삭제"'+
+                    'onclick="removeItem('+cnt+')">';
+        
+        //newDiv.setAttribute("id","d1");//<div id=d1></div>                    
+        newDiv.setAttribute("id","item_"+cnt);//<div id="item_1"></div>                    
+                    
+        //newDiv.innerHTML = htmlTxt; //<div>내가innerHTML이야!!</div>
+        newDiv.innerHTML = htmlTxt; 
+    //<div id="item_3">새로 추가된 아이템[3]
+    //<input type="button" value="삭제" onclick="removeItem(3)"></div>
+        
+        //새로만들어진 엘리먼트를 현재문서에 추가하기
+        //부모노드.appendChild(자식노드);
+        var itemList = document.getElementById('itemList');
+        itemList.appendChild(newDiv);
+        //<div id="itemList"><div>새로 추가된 아이템[1]</div><div>새로 추가된 아이템[2]</div></div>
+     }//appendItem
+     
+     function removeItem(no){
+      var delItem = document.getElementById("item_"+no)//삭제할 노드 정보 얻기
+      //delItem == <div id="item_3">
+      
+      //부모노드.removeChild(삭제할 자식노드)
+      //var itemList = document.getElementById('itemList');//부모노드 얻기
+      //itemList.removeChild(delItem);
+      
+      delItem.parentNode.removeChild(delItem);
+     //delItem.parentNode == <div id="itemList">
+     //사용이유: DOM프로그램 실행시 delItem의 부모는 언제든지 변할 수 있기 때문에
+    	 
+     }//removeItem
+     
+     function delD1(){
+    	var bodyNode = document.getElementsByTagName('body').item(0);
+    	var d1Node = document.getElementById('d1');
+    	bodyNode.removeChild(d1Node);
+     }
+     
+     function delD2(ele){
+    	//var d2Node = document.getElementById('d2');
+    	//d2Node.parentNode.removeChild(d2Node);
+    	
+    	//ele == <button>
+    	var fa = ele.parentNode // == <div><button></div>
+    	var grandfa = fa.parentNode; // == <html><div><button></div></html>
+    	fa.parentNode.removeChild(fa);//삭제하고자 하는 노드는 fa!!
+     }
+  </script>
+</head>
+<!-- changeUsingDOM.html  -->
+<body>
+  <h3>DOM을 사용한 현재문서 변경</h3>
+  <hr>
+  <input type="button" value="추가" onclick="appendItem()">
+  <div id="itemList"></div>
+  <div id="d1">
+     나디브 <button onclick="delD1()">삭제</button>
+  </div>   
+
+</body>
+  <div>
+     너디브 <button onclick="delD2(this)">삭제</button>
+  </div>
+</html>
+
+
+
