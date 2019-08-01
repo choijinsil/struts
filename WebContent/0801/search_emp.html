@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>사원정보 출력</title>
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript">
+
+	function load(){
+		var input=document.getElementById('input');
+		
+		if(document.getElementById('ename').checked){
+			sendRequest('search_emp.jsp', 'sel=ename&input='+input.value, loaded, 'POST');
+		}else if(document.getElementById('dname').checked){
+			sendRequest('search_emp.jsp', 'sel=dname&input='+input.value, loaded, 'POST');
+		}else if(document.getElementById('job').checked){
+			sendRequest('search_emp.jsp', 'sel=job&input='+input.value, loaded, 'POST');
+		}
+	}
+	
+	function loaded(){
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var txt = xhr.responseText;
+			document.getElementById('tab').innerHTML = txt;
+		}
+	}
+	
+	window.onload=function(){
+		load();
+	}
+	
+</script>
+</head>
+<body>
+	<h3>사원정보 출력</h3>
+	<hr color="pink"/> 
+	<input type="radio" name="sel" id="ename" />사원명
+	<input type="radio" name="sel" id="dname"/>부서명
+	<input type="radio" name="sel" id="job"/>직책명<br/>
+	<input type="text" id="input"> 
+	<button style="background-color: pink" onclick="load()">검색</button>
+	<hr color="pink"/> 
+	
+	<table id="tab">
+		
+	</table>
+	
+
+</body>
+</html>

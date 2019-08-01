@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<!-- select_test.html ajax요청-->
+<script type="text/javascript" src="../js/ajax.js"></script>
+<script type="text/javascript">
+
+	
+	function loadSido() {//페이지 요청
+		sendRequest('addr_result.jsp','want=sido',loadedSido);
+	}
+	
+	function loadedSido() {//페이지응답데이터 얻기
+		if(xhr.readyState == 4){//페이지를 요청하여 전체데이터를 응답이 끝났다면 
+			var str=xhr.responseText;
+			//엘리먼트 객체 얻기 왜? innerHTML할수 있기 때문
+			var sido = document.getElementById('sido');
+			sido.innerHTML=str;
+		}
+	}
+	
+	function loadGugun() {//페이지 요청
+		var sido = document.getElementById('sido');
+		sendRequest('addr_result.jsp','want=gugun&sido='+sido.value , loadedGugun ,'POST');
+	}
+	
+	function loadedGugun() {//페이지응답데이터 얻기
+		if(xhr.readyState == 4){//페이지를 요청하여 전체데이터를 응답이 끝났다면 
+			var str=xhr.responseText;
+			//엘리먼트 객체 얻기 왜? innerHTML할수 있기 때문
+			var gugun = document.getElementById('gugun');
+			gugun.innerHTML=str;
+			
+		}
+	}
+	
+	function loadDong() {//페이지 요청
+
+		sendRequest('addr_result.jsp',
+	        	 'want=dong&gugun='+gugun.value+'&sido='+sido.value
+	        		    , loadedDong, 'POST');	
+	}
+	
+	function loadedDong() {//페이지응답데이터 얻기
+		if(xhr.readyState == 4){//페이지를 요청하여 전체데이터를 응답이 끝났다면 
+			 dong.innerHTML=xhr.responseText;
+				
+		}
+	}
+	
+	window.onload= function () {
+		loadSido();
+	}
+
+</script>
+<body>
+	<h3>시도구군동 출력</h3>
+	<hr>
+	
+	<select id="sido" onchange="loadGugun()"><option>==선택==</option></select>
+	<select id="gugun" onchange="loadDong()"><option>==선택==</option></select>
+	<select id="dong"><option>==선택==</option></select>
+
+</body>
+</html>

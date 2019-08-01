@@ -35,5 +35,26 @@
 		select count(deptno) from dept where deptno=#deptno#
 	</select>
 	
+	<!-- 이름중 일부 입력시 조회문 -->
+	<select id="selename" resultClass="empvo" parameterClass="String">
+		select e.empno, e.ename, to_char(e.hiredate,'yy"/"mm"/"dd') hiredate, d.dname, e.job
+		from emp e inner join dept d 
+		on e.deptno=d.deptno where upper(ename) LIKE upper('%'||#ename#||'%')
+	</select>
+	
+	<!-- 부서명 일부 입력시 조회문 -->
+	<select id="seldname" resultClass="empvo" parameterClass="String">
+		select e.empno, e.ename, to_char(e.hiredate,'yy"/"mm"/"dd') hiredate, d.dname, e.job
+		from emp e inner join dept d 
+		on e.deptno=d.deptno where upper(dname) LIKE upper('%'||#dname#||'%')
+	</select>
+	
+	<!-- 직책명 일부 입력시 조회문 -->
+	<select id="seljob" resultClass="empvo" parameterClass="String">
+		select e.empno, e.ename, to_char(e.hiredate,'yy"/"mm"/"dd') hiredate, d.dname, e.job
+		from emp e inner join dept d 
+		on e.deptno=d.deptno where upper(job) LIKE upper('%'||#job#||'%')
+	</select>
+	
 
 </sqlMap>

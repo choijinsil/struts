@@ -1,16 +1,16 @@
 package com.encore.s0729;
 
-
 public class Emp {
 //	select e.empno, e.ename, d.dname, s.grade
 //    from emp e, dept d, salgrade s
 //    where e.deptno=d.deptno and e.sal > s.losal and e.sal < s.hisal
-	
+
 	private int empno;
 	private String ename;
 	private String hiredate;
 	private String dname;
-	
+	private String job;
+
 	public Emp() {
 	}
 
@@ -51,14 +51,21 @@ public class Emp {
 		this.dname = dname;
 	}
 
-	public Emp(int empno, String ename, String hiredate, String dname) {
+	public Emp(int empno, String ename, String hiredate, String dname, String job) {
 		super();
 		this.empno = empno;
 		this.ename = ename;
 		this.hiredate = hiredate;
 		this.dname = dname;
+		this.job = job;
 	}
 
-	
-	
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
 }
