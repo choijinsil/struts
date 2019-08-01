@@ -11,8 +11,8 @@
 	String param = request.getParameter("param");
 	String gu = request.getParameter("gu");
 	Map map= new HashMap();
-	map.put("ds_sido",param);
-	map.put("ds_gugun",gu);
+	map.put("sido",param);
+	map.put("gugun",gu);
 	
 	//시조회
 	List list=null;

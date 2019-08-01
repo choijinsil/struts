@@ -7,22 +7,27 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	List<String> list = null;
+	
 	SqlMapClient smc = MySqlMapClient.getSqlMapInstance();
 	String want = request.getParameter("want");
-	String sido = request.getParameter("sido");
-	String gugun = request.getParameter("gugun");
 	
-	Map map = new HashMap();
-	map.put("gugun", sido);
-	map.put("sido", gugun);
+	List<String> list = null;
+	
+	
 
 	if (want == null || "sido".equals(want)) {//클라이언트가 sido정보를 요청했더라면
-		System.out.println("sidowant>>" + want);
 		list = smc.queryForList("addr.selectSi");
 	} else if ("gugun".equals(want)) {//구군정보
+		String sido = request.getParameter("sido");
 		list = smc.queryForList("addr.selectGu", sido);
 	} else if ("dong".equals(want)) {
+		String sido = request.getParameter("sido");
+		String gugun = request.getParameter("gugun");
+		HashMap<String,String> map = new HashMap<>();
+		map.put("gugun", gugun);
+		map.put("sido", sido);
+		System.out.println("gugun_map>>>" + map.get("gugun"));
+		System.out.println("sido_map>>>" + map.get("sido"));
 		list = smc.queryForList("addr.selectDong", map);
 	}
 

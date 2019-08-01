@@ -39,15 +39,14 @@
 	
 	function loadDong() {//페이지 요청
 
-		sendRequest('addr_result.jsp',
-	        	 'want=dong&gugun='+gugun.value+'&sido='+sido.value
-	        		    , loadedDong, 'POST');	
+		sendRequest('addr_result.jsp','want=dong&gugun='+gugun.value+'&sido='+sido.value , loadedDong, 'POST');	
 	}
 	
 	function loadedDong() {//페이지응답데이터 얻기
 		if(xhr.readyState == 4){//페이지를 요청하여 전체데이터를 응답이 끝났다면 
-			 dong.innerHTML=xhr.responseText;
-				
+			var str=xhr.responseText;
+			var dong = document.getElementById('dong');
+			dong.innerHTML=str;
 		}
 	}
 	
