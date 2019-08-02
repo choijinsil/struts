@@ -37,4 +37,12 @@ public class ReplyDAO {
 		}
 		return false;
 	}
+	
+	public boolean delete(int no) throws SQLException {
+
+		if (smc.delete("reply.delete", no) == 1) {
+			return true;
+		}
+		return false;
+	}
 }

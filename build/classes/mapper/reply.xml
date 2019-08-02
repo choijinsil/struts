@@ -17,4 +17,8 @@
 		where no=#no#
 	</update>
 	
+	<delete id="delete">
+		delete from reply where no=#no#
+	</delete>
+	
 </sqlMap>

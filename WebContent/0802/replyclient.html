@@ -69,7 +69,7 @@
 	       var htmlTxt = '<strong>'+  reply.name +'</strong><br>'+
 	                      reply.content+
 	                '<br><input type="button" value="수정" onclick="viewUpdateForm('+reply.no+')">'+
-	                '<input type="button" value="삭제">';
+	                '<input type="button" value="삭제" onclick="viewDelete('+reply.no+')">';
 	       replyDiv.innerHTML = htmlTxt;
 	       //<div><strong>길동</strong><br>첫댓글<br>수정버튼 삭제버튼</div>
 	       
@@ -114,6 +114,18 @@
 		replyUpdate.style.display='none';
 	}
 	
+	function viewDelete(no){
+		if(confirm('삭제하시겠습니까?')){
+			sendRequest('/struts/reply.do?go=delete','no='+no,viewDeleteResult,'POST');
+		}
+		hideUpdateform();
+	}
+	
+	function viewDeleteResult(){
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			loadReplyList();
+		}
+	}
 	window.onload= function () {
 		loadReplyList();
 	}

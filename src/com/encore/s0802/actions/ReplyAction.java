@@ -73,7 +73,19 @@ public class ReplyAction extends Action {
 			return null;
 
 			}
+		case "delete":{
 
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			PrintWriter out = response.getWriter();
+			if (dao.delete(no)) {
+				out.print("DeleteSuccess");
+			} else {
+				out.print("DeleteFail");
+			}
+			return null;
+		}
+			
 		}
 
 		return mapping.findForward(forName);
