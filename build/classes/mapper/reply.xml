@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd" >
+<sqlMap namespace="reply">
+<typeAlias alias="reply" type="com.encore.s0802.vo.Reply"/>
+
+	<insert id="create">
+		insert into reply(no,name,content) 
+		values(reply_seq.nextval,#name#,#content#)
+	</insert>
+
+	<select id="findAll" resultClass="reply">
+		select no, name, content from reply order by no
+	</select>
+	
+	<update id="modify">
+		update reply set name=#name#, content=#content#
+		where no=#no#
+	</update>
+	
+</sqlMap>

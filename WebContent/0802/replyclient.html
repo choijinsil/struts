@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax 댓글</title>
+	<style type="text/css">
+		/* 스타일정의
+			선택자{스타일명: 스타일값; 스타일명: 스타일값}
+		*/
+		.reply{
+			border: 1px solid pink;
+		
+			}
+	</style>
+<script type="text/javascript" src="/struts/js/ajax.js"></script>
+<script type="text/javascript">
+
+	function addReply() {
+		var name=document.addForm.name.value;
+		var content=document.addForm.content.value;
+		var params= 'name='+name+'&content='+content;
+		document.addForm.name.value='';
+		document.addForm.content.value='';
+		
+		sendRequest('/struts/reply.do?go=insert',params,addResult,'POST');
+	}
+	
+	function addResult(){
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var str=xhr.responseText;
+			str.trim();
+			alert(str);
+			loadReplyList();
+		}
+	}
+	
+	//댓글목록요청
+	function loadReplyList(){
+		sendRequest('/struts/reply.do?go=list',null,loadReplyResult);
+	}
+	
+	function loadReplyResult() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			
+			var list=eval(xhr.responseText);
+			//list자료형은 Array가 된다.
+			
+			//리스트가 출력될 부모 div 얻기
+			var replyList = document.getElementById('replyList');
+			replyList.innerHTML='';//div태그 삭제
+			//var htmlTxt='';
+			for (var i = 0; i < list.length; i++) {
+				replyList.appendChild(makeReplyView(list[i]));		
+			}
+		}
+	}
+	
+	//각 댓글마다 
+	function makeReplyView(reply){
+		 var replyDiv = document.createElement("div");//<div></div>
+	       replyDiv.className='reply';
+	       replyDiv.setAttribute('id','r'+reply.no);
+	       
+	       
+	       //앨리먼트==클래스(객체)
+	       //클래스에서 변수 선언하듯이 앨리먼트에 객체 생성
+	       replyDiv.reply=reply;//list들어가 있음
+	       
+	       var htmlTxt = '<strong>'+  reply.name +'</strong><br>'+
+	                      reply.content+
+	                '<br><input type="button" value="수정" onclick="viewUpdateForm('+reply.no+')">'+
+	                '<input type="button" value="삭제">';
+	       replyDiv.innerHTML = htmlTxt;
+	       //<div><strong>길동</strong><br>첫댓글<br>수정버튼 삭제버튼</div>
+	       
+	       return replyDiv;
+	}
+	
+	function viewUpdateForm(no) {
+		var upForm= document.getElementById('replyUpdate');
+		var replyDiv= document.getElementById('r'+no);
+		var reply=replyDiv.reply;
+		
+		document.upForm.name.value=reply.name;
+		document.upForm.content.value=reply.content;
+		document.upForm.no.value=reply.no;
+		
+		replyDiv.appendChild(upForm);
+		
+		upForm.style.display='';	
+	}
+	
+	//DB수정요청
+	function updateReply() {//페이지요청
+		//수정 필요한 데이터
+		var name= document.upForm.name.value;
+		var content= document.upForm.content.value;
+		var no= document.upForm.no.value;
+		var params='no='+no+'&name='+name+'&content='+content;
+		sendRequest('/struts/reply.do?go=update',params,updateResult,'POST');
+		hideUpdateform();
+	}
+	
+	function updateResult(){//응답처리(콜백)
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			alert(xhr.responseText);
+			loadReplyList();
+		}
+	}
+	
+	function hideUpdateform() {//수정폼 숨기기
+		var upForm=document.getElementById('replyUpdate');
+		document.documentElement.appendChild(upForm);
+		replyUpdate.style.display='none';
+	}
+	
+	window.onload= function () {
+		loadReplyList();
+	}
+
+</script>
+</head>
+<body>
+	<!-- 댓글 리스트(목록출력, DB에 저장된 값을 화면에 출력) -->
+	<div id="replyList"></div>
+	
+	<!-- 댓글 입력폼 -->
+	<div id="replyAdd">
+	<form name="addForm">
+			
+		이름: <input type="text" size="10" name="name"/><br/>
+		내용:	 <textarea rows="2" cols="20" name="content"></textarea><br/>
+		<button type="button" onclick="addReply()">등록</button>
+	</form>
+	</div>
+	
+	<!-- 댓글 수정폼 -->
+	<div id="replyUpdate" style="display: none; background-color: pink" >
+	<form name="upForm">
+			<input type="hidden" name="no">
+		이름: <input type="text" size="10" name="name"/><br/>
+		내용:	 <textarea rows="2" cols="20" name="content"></textarea><br/>
+		<button type="button" onclick="updateReply()">등록</button>
+		<button type="button">취소</button>
+	</form>
+	</div>
+	
+</body>
+</html>

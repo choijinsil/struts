@@ -29,6 +29,7 @@
   <sqlMap resource="./mapper/guest.xml"/>
   <sqlMap resource="./mapper/emp.xml"/>
   <sqlMap resource="./mapper/addr.xml"/>
+  <sqlMap resource="./mapper/reply.xml"/>
   
 </sqlMapConfig>
 

@@ -17,14 +17,11 @@
 
 <!-- 	drop table ds_zip;
 CREATE TABLE ds_zip (
-
   ds_id number(11) primary key,  1
   ds_sido varchar2(6) NOT NULL, 서울
   ds_gugun varchar2(30) NOT NULL, 강남구
   ds_dong varchar2(75) NOT NULL 개포1동
-  
 ); 
 insert into ds_zip values('1','서울','강남구','개포1동');
 -->
-
 </sqlMap>
