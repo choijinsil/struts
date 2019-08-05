@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>jQuery 테스트</h3>
+	<p>
+		동해물과 백두산이 <br/>
+		마르고 닳도록 <br/>
+		하느님이 만세 ~!!
+	</p>
+	<button id="b0">바꾸기</button>
+	<button id="b1">지우기</button>
+	<button id="b2">보이기</button>
+	<button id="b3">모두지우기</button>
+	
+</body>
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#b0').click(function(){
+			$('h3').text('제이쿼리 바꾼 텍스트이다!');
+		});
+		
+		$('#b1').click(function(){
+			$('p').hide(1000);
+		});
+		
+		$('#b2').click(function(){
+			$('p').show(1000);
+		});
+		
+		$('#b3').click(function(){
+			$('*').hide(1000);
+		});
+		
+	});
+</script>
+</html>

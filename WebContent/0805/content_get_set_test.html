@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>Content값 얻고 정하기</h3>
+	<hr/>
+	<a href="https://www.naver.com">네이버로 이동</a><br/>
+	<button id="b1">링크값 얻기</button>
+	<button id="b2">링크값 변경</button>
+</body>
+<script type="text/javascript">
+	
+	$(function(){
+		$('#b1').click(function(){
+			alert($('a').attr('href'));
+		});
+		
+		$('#b2').click(function(){
+			$('a').attr('href','https://www.daum.net');
+			//$('a').text('다음으로 이동');
+			$('a').text('<strong>다음으로 이동</strong>');
+			
+		});
+	})
+</script>
+</html>
