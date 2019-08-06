@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+	$(function(){
+		$('#b1').click(function(){
+			alert($('div').text());
+		});//첫번째 버튼 클릭했다면
+		
+		$('#b2').click(function(){
+			$('div').text('변경된 디브야');
+		});//두번째 버튼 클릭했다면
+		
+		$('#b3').click(function(){
+			alert($('div').html());
+		});
+		
+		$('#b4').click(function(){
+			$('div').html('<strong>변경된 디브야</strong>');
+		});
+		
+		$('#b5').click(function(){
+			$('p').html(function(index, origin){
+				//p태그가 여러개 있을때, index는 순번, 두번쨰 인자값은 태그의 value를 나타낸다.
+				
+				if(index==0){
+					
+					return origin+'<br>마르고 닳도록';
+				}else{
+					return origin+'<br>철갑을 두른듯'
+				}
+			});
+			//$('p:first').html($('p:first').html()+'<br>마르고 닳도록');
+		});
+		
+		$('#b6').on('click',function(){
+			alert($('input[name=username]').val());
+		});
+		
+		$('#b7').click(function(){
+			$('[name=username]').val('동해번쩍');
+		});
+		
+	});
+
+</script>
+<meta charset="UTF-8">
+<title>text, html, val함수 테스트</title>
+</head>
+<body>
+	<h3>text, html, val함수 테스트</h3>
+	<hr>
+	<div><font color="blue">나디브</font></div>
+	<button id="b1">div 값 얻기(text)</button>
+	<button id="b2">div 값 설정(text)</button>
+	<button id="b3">div 값 얻기(html)</button>
+	<button id="b4">div 값 설정(html)</button>
+	
+	<hr>
+	<p>동해물과 백두산이</p>
+	<button id="b5">가사추가</button>
+	<p>남산위에 저 소나무</p>
+	
+	<hr>
+	이름: <input type="text" name="username">
+	<button id="b6">사용자명얻기</button>
+	<button id="b7">사용자명변경</button>
+</body>
+</html>

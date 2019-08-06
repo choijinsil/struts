@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	//-append, prepend, after, before, remove, empty
+	var cnt=0;
+	
+	$(function(){
+		$('#b1').click(function(){
+			cnt++;
+			$('#itemList').append('<div>새로운 아이템['+cnt+']<button class="delBtn">삭제</button></div>');
+		});
+		
+		$('div').on('click','button',function(){
+			$(this).parent().remove();
+		});
+		
+		$('#b2').click(function(){
+			cnt=0;
+			$('#itemList').empty();
+		});
+		
+	});
+	
+	
+	
+</script>
+<meta charset="UTF-8">
+<title>Dom을 사용한 변경(조작)</title>
+</head>
+<body>
+	<input type="button" value="추가" id="b1">
+	<input type="button" value="전체삭제" id="b2">
+	<div id="itemList"></div>
+</body>
+</html>
