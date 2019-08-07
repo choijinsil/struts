@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+	function gildong(a,b,c){
+    	alert('안녕,길동[a='+a+',b='+b+',c='+c+']');
+    }
+	
+	var hwasa=function(){
+		alert('곱창 고고!');
+	}
+	
+	function lime(str,fun){
+		//원하는 자료형 str: String, 
+		//typeof(데이터) --데이터의 자료형을 리턴
+		if(typeof(str)==='string'){
+			alert(str);
+			fun();
+		}else if(typeof(str)==='function'){
+			str();
+		}
+	}
+	
+	</script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>파라미터 테스트</h3>
+	<hr>
+	<button onclick="gildong(11)">1번</button>
+	<button onclick="gildong(11,22)">2번</button>
+	<button onclick="gildong(11,22,33)">3번</button>
+	<button onclick="gildong()">4번</button>
+	<button onclick="gildong(11,22,33,44)">5번</button>
+	<br><br>
+	<button onclick="lime('안녕',hwasa)">라임호출</button>
+	<button onclick="lime(hwasa)">라임호출2</button>
+</body>
+</html>

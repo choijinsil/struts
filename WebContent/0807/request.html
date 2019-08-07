@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<title>Ajax요청 테스트(전체페이지)</title>
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		var str='';  
+	  	var txt=$('input[name=fruit]:checked').each(function(){
+			str+= $(this).val()+",";
+			});
+	 
+	  	
+		$('#btn1').click(function(){//ajax 버튼 클릭
+			$.ajax({
+				url: 'response1.jsp'//요청
+				, success: function(result){
+					
+					var arr=result.split(',');
+					
+					var html = '<ul>';
+					$(arr).each(
+						function(i){
+							html += '<li>'+arr[i]+'</li>'   	
+						}
+					);
+					html += '</ul>';
+		        	
+					$('#d1').html(html);
+					
+		        	/* for(var i=0; i<arr.length; i++){
+		        	   html += '<li>'+arr[i]+'</li>'   	
+		        	} */
+		        	
+				}// 성공시 콜백
+				 
+				, type:'GET' //HTTP요청방식
+				, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+				, error: function(xhr,status){//에러콜백
+					alert('서버에러!');
+					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+				}
+			});
+		});
+		
+		$('#btn2').click(function(){
+			$.ajax({
+				url: 'response2.jsp'//요청
+				, success: function(result){
+					
+					$('#d1').html(result);
+				}// 성공시 콜백
+				, data: {
+					name: $('#name').val()
+				} 
+				, type:'POST' //HTTP요청방식
+				, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+				, error: function(xhr,status){//에러콜백
+					alert('서버에러!');
+					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+				}
+			});
+		});
+		
+		$('#btn3').click(function(){
+			$.ajax({
+				url: 'response3.jsp'//요청
+				, success: function(result){
+					$('#d1').html(result);
+				}// 성공시 콜백
+				, data: {
+					name: $('#name').val()
+				} 
+				, type:'POST' //HTTP요청방식
+				, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+				, error: function(xhr,status){//에러콜백
+					alert('서버에러!');
+					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+				}
+			});
+		});
+		
+		$('#btn4').click(function(){
+			$.ajax({
+				url: 'response4.jsp'//요청
+				, success: function(doc){
+					
+					var ol = $('<ol>');	
+	        	      $(doc).find('title').each(function(idx,titleEle){
+	        	    	 //alert($(this).text());//AjaxProgramming
+	        	    	 var li = $('<li>').text($(this).text());
+	        	    	 //<li>AjaxProgramming</li>
+	        	    	 ol.append(li);//<ol><li>AjaxProgramming</li></ol>
+	        	      });
+					
+					$('#d1').html(ol);
+				}// 성공시 콜백
+				, type:'GET' //HTTP요청방식
+				, dateType: 'xml'//응답데이터 형식(text, html, xml, json)
+			});
+		});
+		
+		$('#btn5').click(function(){
+			$.ajax({
+				url: 'response5.jsp'//요청
+				, success: function(result){
+					var str= JSON.parse(result);
+					for (var i = 0; i < str.person.length; i++) {
+						
+						 var htmlTxt = '<br>이름:'+ str.person[i].name
+		                 +'<br>나이:'+ str.person[i].age
+		                 +'<br>직업:'+ str.person[i].job+'<hr color=red>';
+		                 $('#d1').html($('#d1').html()+htmlTxt);
+						}
+				}// 성공시 콜백
+				, type:'GET' //HTTP요청방식
+				, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+				, error: function(xhr,status){//에러콜백
+					alert('서버에러!');
+					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+				}
+			});
+		});
+		
+		$('#btn6').click(function(){
+			$.ajax({
+				url: 'response6.jsp'//요청
+				, success: function(result){
+					var books=eval(result);
+					
+					var htmlTxt='<ol><font color=red>';
+					for (var i = 0; i < books.length; i++) {
+						htmlTxt+='<li>'+books[i].title+'</li>'
+					}
+					htmlTxt+='</ol></font>';
+					
+					$('#d1').html(htmlTxt);
+				}// 성공시 콜백
+				, type:'GET' //HTTP요청방식
+				, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+				, error: function(xhr,status){//에러콜백
+					alert('서버에러!');
+					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+				}
+			});
+		});
+
+	});		
+		
+	</script>
+</head>
+<body>
+
+	<p>이름: <input type="text" name="uname" id="name"></p><br/>
+	<button id="btn1">response1 요청 (HTMLtext)</button><br/>
+	<button id="btn2">response2 요청 (HTMLtext)</button><br/>
+	<button id="btn3">response3 요청 (plain)</button><br/>
+	<button id="btn4">response4 요청</button><br/>
+	<button id="btn5">response5 요청</button><br/>
+	<button id="btn6">response6 요청</button><br/>
+	
+	<h3>결과출력</h3>
+	<hr>
+	<div id="d1" style="border: 1px solid;"></div><br/>
+
+</body>
+</html>

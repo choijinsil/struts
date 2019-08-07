@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){//document.ready
+		$('button').click(function(){
+			var btStr=$(this).text();
+			if(btStr=='get요청'){
+				//get요청: jQuery.get(url, callback);
+				 /* $.get('getData1.jsp',function(result, status){
+					$('div').html(result);
+				});  */
+				
+				//get방식은 +가 텍스트로 인식이 안된다.
+				 $.get('getData1.jsp','name='+ encodeURIComponent('홍+길동'),function(result){
+		        	   $('div').html(result);
+				 });
+			}else if(btStr=='post요청'){
+				$.post('getData2.jsp',
+						{
+							name:$('input[name=username]').val()
+							, age: $('input[name=age]').val()
+						}, 
+						function(responseTxt){
+							$('div').html(responseTxt);
+							$('input').val('');
+						}
+					)
+			}
+		});
+		
+		$('#bt').click(function(){//ajax 버튼 클릭
+			$.ajax({
+				//--응답페이지 요청이 필수
+				url: 'getData3.jsp'//요청
+				, success: function(result){
+					$('div').html(result);
+				}// 성공시 콜백
+				//-- 데이터 전달 키, 벨류
+				, data: {
+					name: $('[name=username]').val()
+					, age: $('[name=age]').val()
+				}
+				, type:'POST' //HTTP요청방식
+				, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+				, error: function(xhr,status){//에러콜백
+					alert('서버에러!');
+					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+				}
+			});
+			
+		});
+	
+	});
+</script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>jQuery Ajax(get함수, post함수)</h3>
+	<hr>
+	이름: <input type="text" name="username"><br>
+	나이: <input type="text" name="age"><br>
+	<button>get요청</button>
+	<button>post요청</button>
+	<button id="bt">ajax요청(제일 많이 사용)</button>
+	<div></div>
+</body>
+</html>

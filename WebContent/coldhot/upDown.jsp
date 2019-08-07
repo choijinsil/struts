@@ -20,17 +20,35 @@
 	var cnt=0;
 	$(function() {
 
+		$('body').on('click','down', function(){
+			cnt--;
+			console.log(cnt);
+		});
 		
+		$('body').on('click','up', function(){
+			cnt++;
+			console.log(cnt);
+		});
+		
+		
+		$.ajax({
+			//--응답페이지 요청이 필수
+			url: 'getData3.jsp'//요청
+			, success: function(result){
+				$('div').html(result);
+			}// 성공시 콜백
+			//-- 데이터 전달 키, 벨류
+			, data: {
+				name: $('[name=username]').val()
+				, age: $('[name=age]').val()
+			}
+			, type:'POST' //HTTP요청방식
+			, dateType: 'html'//응답데이터 형식(text, html, xml, json)
+			, error: function(xhr,status){//에러콜백
+				alert('서버에러!');
+				alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
+			}
+		});
 	});
-	
-	$('body').on('click','down', function(){
-		cnt--;
-		console.log(cnt);
-	});
-	$('body').on('click','up', function(){
-		cnt++;
-		console.log(cnt);
-	});
-	
 </script>
 </html>
