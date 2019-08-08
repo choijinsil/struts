@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		$(function(){
+			$('button:eq(0)').click(function(){
+				//첫번째 버튼을 클릭했다면
+				$.ajax({
+					url: 'response7_1.jsp'
+					,success: function(data){//요청에 성공(ok200)했다면
+						data=data.trim();
+						var arr = data.split(',');
+						
+						var ul = $('<ul>');
+							$.each(arr,function(idx, value){//each(배열, function)
+								ul.append($('<li>').html(value));
+							});
+						var font = $('<font>').append(ul).attr('color','green');
+						$('div').html(font);
+					}
+				});
+			});
+			
+			$('button:eq(1)').click(function(){
+				$.ajax({
+					url: 'response7_2.jsp'
+					,success: function(data){//요청에 성공(ok200)했다면
+						console.log('사원의 수: '+data.length);
+						var ul = $('<ul>')
+						$.each(data,function(idx, value){
+							ul.append($('<li>').text(value));
+						});
+						$('div').html(ul);
+					}
+					,dataType:'json'//'["a","b","c"]' String을 Array로 변환 
+				});
+			});
+			
+			$('button:eq(2)').click(function(){
+				$.ajax({
+					url: 'response7_3.jsp'
+					,success: function(data){//요청에 성공(ok200)했다면
+						$('div').html(data);
+					}
+				});
+			});
+			
+			$('button:eq(3)').click(function(){
+				$.ajax({
+					url: '../0730/response8.do'
+					,success: function(data){//요청에 성공(ok200)했다면
+						$('div').html(data);
+					}
+					,data: {
+						deptno : $('#deptno').val()
+					}
+				});
+			});
+		});
+
+	});		
+		
+	</script>
+<title>Ajax요청 테스트(전체페이지)</title>
+	
+</head>
+<body>
+
+	<p>이름: <input type="text" name="uname" id="name"></p><br/>
+	<button id="btn1">response7_1 요청 (DB사원정보 - 이름)</button><br/>
+	<button id="btn2">response7_2 요청 (DB사원정보 - 이름)</button><br/>
+	<button id="btn3">response7_3 요청 (DB사원정보 - 이름)</button><br/>
+	부서번호: <input type="text" id="deptno"><br>
+	<button id="btn4">response8 요청</button><br/>
+	<h3>결과출력</h3>
+	<hr>
+	<div id="d1" style="border: 1px solid;"></div><br/>
+
+</body>
+</html>

@@ -97,6 +97,14 @@
 			<forward name="response" path="/0730/response8.jsp"></forward>
 		</action>
 		
+		<action path="/0808/request/mission1"
+				type="com.encore.s0808.actions.MissionAction1">
+		</action>
+		
+		<action path="/0808/request/mission2"
+				type="com.encore.s0808.actions.MissionAction2">
+			<forward name="mission2" path="/0808/response/response2.jsp"></forward>
+		</action>
 		<!-- <action path="/guest/list"
 				type="guest.actions.GuestListAction">
 			<forward name="listForm" path="/guest/list.jsp"></forward>
