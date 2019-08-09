@@ -4,6 +4,7 @@
 <typeAlias alias="empvo" type="com.encore.s0729.Emp" />
 	
 	
+	
 	<!-- resultClass는 ibatis에서 new를 해주는 것이다. -->
 	<!-- resultClass에는 new 뒤에 생성하는 생성자로 써줘야 한다. -->
 	<select id="selectKeyword" resultClass="String" parameterClass="String">
@@ -54,6 +55,24 @@
 		select e.empno, e.ename, to_char(e.hiredate,'yy"/"mm"/"dd') hiredate, d.dname, e.job
 		from emp e inner join dept d 
 		on e.deptno=d.deptno where upper(job) LIKE upper('%'||#job#||'%')
+	</select>
+	
+	
+	<!-- 미션3조회(사원번호,사원명,급여,부서번호,입사일자) -->
+   <select id="selectMission3" resultClass="com.encore.s0808.vo.Emp">
+      select empno,ename,sal,deptno,hiredate
+      from  emp
+      <isNotNull property="ename">
+         where  ename like '%'||#ename#||'%'
+      </isNotNull>
+      <isNotNull property="deptno">
+         where  deptno = #deptno#
+      </isNotNull>
+   </select>
+   
+   <!-- 필터 미션을 위한 조회 -->
+   <select id="forFilter" resultClass="com.encore.s0809.vo.EmpVO">
+		select empno, ename, hiredate, sal from emp
 	</select>
 	
 

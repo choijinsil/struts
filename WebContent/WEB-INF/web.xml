@@ -11,13 +11,10 @@
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
     <init-param>
       <param-name>config</param-name>
-      <param-value>/WEB-INF/struts-config.xml,/WEB-INF/guest-config.xml,/WEB-INF/reply-config.xml</param-value>
+      <param-value>/WEB-INF/struts-config.xml,/WEB-INF/guest-config.xml,/WEB-INF/reply-config.xml,/WEB-INF/mission-config.xml</param-value>
     </init-param>
     <load-on-startup>2</load-on-startup>
  </servlet>
- 
- 
-
 
   <!-- Standard Action Servlet Mapping -->
   <servlet-mapping>

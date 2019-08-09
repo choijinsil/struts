@@ -16,11 +16,9 @@
 					su1: $('input[name=su1]').val(),
 					su2: $('input[name=su2]').val(),
 					oper: $('select[name=oper]').val()
+					, subject:'제이쿼리&에이젝스'
 				}
-				, error: function(xhr,status){//에러콜백
-					alert('서버에러!');
-					alert('상태: '+xhr.status+',상태 text: '+xhr.statusText+'\nstatus: '+status);
-				}
+				
 			});
 		}); 
 	});

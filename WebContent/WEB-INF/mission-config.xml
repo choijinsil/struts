@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<!-- 
+     mission-config.xml새롭게 생성했다면
+     web.xml에 등록
+ -->          
+<struts-config>
+  <action-mappings>
+     <!-- 
+                   실행순서)
+          1. action태그 path속성에 명시된 가상URL요청을 했다면
+          
+          2. action태그 type속성에 명시된 액션클래스 execute()실행
+             execute() - request.getParameter()
+                       - request.setAttribute()
+                       
+          3. forward태그 path속성에 명시된 JSP페이지 이동
+                       - out.print(request.getAttribute())                       
+      -->
+     <action path="/mission/response1"
+             type="com.encore.s0808.actions.MissionAction1">
+       <!-- forword태그 생략의 의미?
+            MissionAction1(액션클래스) execute에서 out.print()하겠음!!
+        -->      
+     </action>
+                  
+     <action path="/mission/response2"
+             type="com.encore.s0808.actions.MissionAction2">
+       <forward name="success" path="/0808/response/response2.jsp"/>      
+     </action>
+                  
+     <action path="/mission/response3"
+             type="com.encore.s0808.actions.MissionAction3">
+       <forward name="success" path="/0808/response/response3.jsp"/>      
+     </action>             
+             
+  </action-mappings>
+</struts-config>
+
+
+

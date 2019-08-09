@@ -6,7 +6,7 @@
 	 	select distinct(ds_sido) from ds_zip order by ds_sido
 	</select>
 	
-	<select id="selectGu" resultClass="String" parameterClass="String">
+	<select id="selectGu" resultClass="String">
 	 	select distinct(ds_gugun) from ds_zip where ds_sido=#ds_sido# order by ds_gugun
 	</select>
 	
